@@ -32,3 +32,5 @@ router.delete(
   }),
   deleteFilm,
 );
+
+module.exports = router;

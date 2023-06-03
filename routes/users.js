@@ -14,3 +14,5 @@ router.patch(
   }),
   updateUser,
 );
+
+module.exports = router;
