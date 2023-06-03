@@ -38,11 +38,17 @@ const userSchema = new mongoose.Schema({
     validate: { validator: validateUrl, message: 'Некорректный формат ссылки' },
   },
   owner: {
-    type: mongoose.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
     required: true,
   },
+  likes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    default: [],
+  }],
   movieId: {
-    type: Number,
+    type: String,
     required: true,
   },
   nameRU: {
