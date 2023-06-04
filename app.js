@@ -5,19 +5,19 @@ const cookieParser = require('cookie-parser');
 const {
   celebrate, Joi, errors,
 } = require('celebrate');
+const { PORT, DB_CONNECT, DB_NAME } = require('./utils/config');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/notFoundError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { checkSource } = require('./middlewares/cors');
 
-const { PORT = 3000 } = process.env;
-
 const app = express();
 
-app.use(checkSource);
+mongoose.set('strictQuery', false);
+mongoose.connect(DB_CONNECT + DB_NAME);
 
-mongoose.connect('mongodb://localhost:27017/filmsdb');
+app.use(checkSource);
 
 app.use(requestLogger);
 
