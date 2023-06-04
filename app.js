@@ -3,12 +3,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
+const helmet = require('helmet');
 const { PORT, DB_CONNECT, DB_NAME } = require('./utils/config');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { checkSource } = require('./middlewares/cors');
-const { router } = require('./routes/index');
+const router = require('./routes/index');
 const { errorHandler } = require('./middlewares/errorHandler');
-const helmet = require('helmet');
 const limiter = require('./middlewares/rateLimit');
 
 const app = express();
@@ -36,6 +36,4 @@ app.use(errors());
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-});
+app.listen(PORT);
