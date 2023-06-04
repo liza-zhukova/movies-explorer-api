@@ -8,11 +8,15 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { checkSource } = require('./middlewares/cors');
 const { router } = require('./routes/index');
 const { errorHandler } = require('./middlewares/errorHandler');
+const helmet = require('helmet');
+const limiter = require('./middlewares/rateLimit');
 
 const app = express();
 
 mongoose.set('strictQuery', false);
 mongoose.connect(DB_CONNECT + DB_NAME);
+
+app.use(helmet());
 
 app.use(checkSource);
 
@@ -22,7 +26,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use('/', router);
+app.use(limiter);
+
+app.use(router);
 
 app.use(errorLogger);
 
